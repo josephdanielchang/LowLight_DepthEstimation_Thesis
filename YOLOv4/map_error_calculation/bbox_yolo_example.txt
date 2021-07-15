@@ -1,0 +1,66 @@
+********************************* HOW TO ACCESS *********************************
+
+- i is image #, j is object #
+
+*********** IMAGE NAME ***********
+
+bbox_normal[0]['filename'][-21:-4]
+output: 'd06e9c67-6cb0844b'
+
+*********** LABEL ***********
+
+bbox_normal[i]['objects'][j]['name']
+output: 'car'
+
+bbox_normal[i]['objects'][j]['class_id']
+2
+
+*********** BBOX ***********
+
+bbox_normal[i]['objects'][j]['relative_coordinates']['left_x']
+bbox_normal[i]['objects'][j]['relative_coordinates']['top_y']
+bbox_normal[i]['objects'][j]['relative_coordinates']['width']
+bbox_normal[i]['objects'][j]['relative_coordinates']['height']
+output: 379
+output: 267
+output: 214
+output: 193
+
+********************************* CLASSES *********************************
+
+0: person
+17: horse
+2: car
+7: truck
+5: bus
+6: train
+3: motorbike
+1: bicycle
+9: traffic light
+11: stop sign
+67: cell phone
+56: chair
+45: bowl
+41: cup
+
+********************************* JSON FILE *********************************
+
+{
+ "frame_id":4, 
+ "filename":"/mnt/earth/joseph/yolo_test_data/dea0cf40-f0bd15fd.jpg", 
+ "objects": [
+	{"class_id":7, "name":"truck", "relative_coordinates":{"left_x": 160, "top_y": 320, "width": 146, "height": 69}, "confidence":0.797341}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 729, "top_y": 311, "width":  39, "height":  33}, "confidence":0.705262}, 
+  	{"class_id":7, "name":"truck", "relative_coordinates":{"left_x": 729, "top_y": 311, "width":  39, "height":  33}, "confidence":0.328228}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 211, "top_y": 326, "width": 258, "height": 163}, "confidence":0.998449}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 606, "top_y": 321, "width": 114, "height":  86}, "confidence":0.995016}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x":  50, "top_y": 328, "width": 107, "height":  53}, "confidence":0.985469}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 451, "top_y": 326, "width":  72, "height":  50}, "confidence":0.955048}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 532, "top_y": 326, "width":  37, "height":  27}, "confidence":0.949910}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 772, "top_y": 314, "width":  26, "height":  20}, "confidence":0.825619}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 415, "top_y": 329, "width":  32, "height":  20}, "confidence":0.805533}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 563, "top_y": 323, "width":  25, "height":  23}, "confidence":0.554915}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 490, "top_y": 322, "width":  24, "height":  15}, "confidence":0.309278}, 
+  	{"class_id":2, "name":"car", "relative_coordinates":{"left_x": 584, "top_y": 320, "width":  20, "height":  19}, "confidence":0.295485}
+ ] 
+}

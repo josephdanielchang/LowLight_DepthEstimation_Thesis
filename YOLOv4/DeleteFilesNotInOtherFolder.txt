@@ -1,0 +1,1 @@
+for %F in ("C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] YOLOv4\Berkeley_Deep_Drive Data_714\yolo_output_normal\images\*.jpg") do @if not exist "C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] YOLOv4\Berkeley_Deep_Drive Data_714\ground_truth\images\%~nF.jpg" echo del "%F"

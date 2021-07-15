@@ -1,0 +1,98 @@
+********************************* HOW TO ACCESS *********************************
+
+- i is image #, j is object #
+
+*********** IMAGE NAME ***********
+
+bbox_gt[0]['name'][:-4]
+output: '0000f77c-6257be58'
+
+*********** LABEL ***********
+
+bbox_gt[i]['labels'][j]['category']
+output:'traffic light'
+
+*********** BBOX ***********
+
+bbox_gt[0]['labels'][0]['box2d']['x1']
+bbox_gt[0]['labels'][0]['box2d']['y1']
+bbox_gt[0]['labels'][0]['box2d']['x2']
+bbox_gt[0]['labels'][0]['box2d']['y2']
+output: 1125.902264
+output: 133.184488
+output: 1156.978645
+output: 210.875445
+
+********************************* CLASSES *********************************
+
+1: pedestrian
+2: rider
+3: car
+4: truck
+5: bus
+6: train
+7: motorcycle
+8: bicycle
+9: traffic light
+10: traffic sign
+
+********************************* JSON FILE *********************************
+
+{
+'name': '03b0697b-79bfc82c.jpg', 
+
+'attributes': {
+	'weather': 'undefined', 
+	'scene': 'residential', 
+	'timeofday': 'daytime'}, 
+
+'timestamp': 10000, 
+'labels': [
+	{'category': 'car', 
+	 'attributes': {'occluded': True, 
+			'truncated': False, 
+			'trafficLightColor': 'none'}, 
+			'manualShape': True, 	
+			'manualAttributes': True, 
+			'box2d': {
+				'x1': 150.978239, 
+				'y1': 378.069475, 
+				'x2': 220.852466, 
+				'y2': 427.979637
+			}, 
+			'id': 38488
+	}, 
+
+	{'category': 'car', 
+	 'attributes': {'occluded': True, 
+			'truncated': False, 
+			'trafficLightColor': 'none'}, 
+			'manualShape': True, 
+			'manualAttributes': True, 
+			'box2d': {'x1': 546.516272, 
+				'y1': 363.096426, 
+				'x2': 556.498304, 
+			'y2': 381.812736
+			}, 
+			'id': 38489
+	}, 
+
+{'category': 'car', 'attributes': {'occluded': False, 'truncated': False, 'trafficLightColor': 'none'}, 'manualShape': True, 'manualAttributes': True, 'box2d': {'x1': 521.56119, 'y1': 363.096426, 'x2': 551.507287, 'y2': 383.06049}, 'id': 38490}, 
+
+{'category': 'car', 'attributes': {'occluded': False, 'truncated': False, 'trafficLightColor': 'none'}, 'manualShape': True, 'manualAttributes': True, 'box2d': {'x1': 561.489319, 'y1': 349.371132, 'x2': 631.363546, 'y2': 406.767818}, 'id': 38491}, 
+
+{'category': 'traffic sign', 'attributes': {'occluded': False, 'truncated': False, 'trafficLightColor': 'none'}, 'manualShape': True, 'manualAttributes': True, 'box2d': {'x1': 384.308246, 'y1': 346.875624, 'x2': 400.529047, 'y2': 356.857658}, 'id': 38492}, 
+
+{'category': 'traffic sign', 'attributes': {'occluded': False, 'truncated': False, 'trafficLightColor': 'none'}, 'manualShape': True, 'manualAttributes': True, 'box2d': {'x1': 379.317229, 'y1': 319.425035, 'x2': 404.27231, 'y2': 345.627872}, 'id': 38493}, 
+
+{'category': 'drivable area', 'attributes': {'areaType': 'direct'}, 'manualShape': True, 'manualAttributes': True, 'poly2d': [{'vertices': [[199.20833, 605.066686], [511.352132, 553.307682], [670.980621, 576.610578], [858.191848, 596.080545], [944.375542, 579.41193], [1008.86839, 584.018562], [1061.877663, 593.085166], [683.333061, 405.895457], [514.42322, 410.502089], [199.20833, 605.066686]], 'types': 'LCCCCCCLLL', 'closed': True}], 'id': 38494}, 
+
+{'category': 'lane', 'attributes': {'laneDirection': 'parallel', 'laneStyle': 'solid', 'laneType': 'road curb'}, 'manualShape': True, 'manualAttributes': True, 'poly2d': [{'vertices': [[501.483973, 388.600131], [0, 506.478833]], 'types': 'LL', 'closed': False}], 'id': 38495}, 
+
+{'category': 'lane', 'attributes': {'laneDirection': 'parallel', 'laneStyle': 'solid', 'laneType': 'road curb'}, 'manualShape': True, 'manualAttributes': True, 'poly2d': [{'vertices': [[634.347257, 386.602187], [1060.908325, 590.392487]], 'types': 'LL', 'closed': False}], 'id': 38496}, 
+
+{'category': 'lane', 'attributes': {'laneDirection': 'parallel', 'laneStyle': 'solid', 'laneType': 'double yellow'}, 'manualShape': True, 'manualAttributes': True, 'poly2d': [{'vertices': [[550.433604, 386.602187], [203.7903, 601.381179]], 'types': 'LL', 'closed': False}], 'id': 38497}, 
+
+{'category': 'lane', 'attributes': {'laneDirection': 'parallel', 'laneStyle': 'solid', 'laneType': 'double yellow'}, 'manualShape': True, 'manualAttributes': True, 'poly2d': [{'vertices': [[540.443883, 385.603214], [100.896177, 613.368842]], 'types': 'LL', 'closed': False}], 'id': 38498}
+ ]
+}

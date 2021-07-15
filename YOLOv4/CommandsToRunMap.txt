@@ -1,0 +1,4 @@
+Go to /home/joseph/map dir in linux
+conda activate map
+python run.py
+Enter settings as appears in Settings screenshots

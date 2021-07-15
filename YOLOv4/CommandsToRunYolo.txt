@@ -1,0 +1,36 @@
+Tutorial
+https://robocademy.com/2020/05/01/a-gentle-introduction-to-yolo-v4-for-object-detection-in-ubuntu-20-04/#YOLO_v4
+
+------------------- Official darknet -------------------
+
+Test #1 - Single Image Test
+
+./darknet detect cfg/yolov4.cfg yolov4.weights test_data/[Test1]_Stereo_Data/left/01.png
+
+./darknet detect cfg/yolov4.cfg yolov4.weights test_data/[Test1]_Stereo_Data/left/01_enhanced.png
+
+Test #2 - Video Test
+ 
+./darknet detector test cfg/coco.data cfg/yolov4.cfg yolov4.weights data/person.jpg -i 0 -thresh 0.25
+
+------------------- VGG_AlexeyAB_darknet -------------------
+https://github.com/pjreddie/darknet/issues/723
+https://darknet.gong.im/
+https://colab.research.google.com/drive/1o-XcrepS-itbKZIX6rpNbdu2VCsabMOe?usp=sharing#scrollTo=YW8Um-_5RM8R
+https://github.com/vincentgong7/VG_AlexeyAB_darknet
+https://anaconda.org/bioconda/p7zip
+
+Test if it works
+
+./darknet detector batch cfg/coco.data cfg/yolov4.cfg weights/yolov4.weights io_folder sample_imgs/ output/ -out output/result.json -ext_output > output/result.txt
+
+Test on own images
+
+./darknet detector batch cfg/coco.data cfg/yolov4.cfg weights/yolov4.weights io_folder /mnt/earth/joseph/yolo_test_data_8k/ output/test_yolo_data_8k/images/ -out output/test_yolo_data_8k/result.json -ext_output > output/test_yolo_data_8k/result.txt
+
+./darknet detector batch cfg/coco.data cfg/yolov4.cfg weights/yolov4.weights io_folder /mnt/earth/joseph/yolo_test_data_enhanced_8k/ output/test_yolo_data_enhanced_8k/images/ -out output/test_yolo_data_enhanced_8k/result.json -ext_output > output/test_yolo_data_enhanced_8k/result.txt
+
+------------------- Dataset Path ------------------- 
+
+/mnt/earth/joseph/dataset/train/nighttime/left
+/mnt/earth/joseph/dataset/train/nighttime/left_enhanced

@@ -1,0 +1,100 @@
+---------------------SSH SERVER---------------------
+
+*** TRAIN FROM EPOCH 0***
+
+- create dataset/train/daytime-nighttime/left-right
+	 dataset/val/nighttime/left-right
+- create datafiles with Oxford_NightTime_Data.txt, Oxford_DayTime_Data.txt, Oxford_NightTime_Data_withGT.txt
+
+conda activate nightdepth 
+CUDA_VISIBLE_DEVICES=0
+python train.py --name run3 \
+                --dataname Oxford \
+                --trn_datafile1 ./datafiles/nonenhanced_MNT/Oxford_NightTime_Data.txt \
+                --trn_datafile2 ./datafiles/nonenhanced_MNT/Oxford_DayTime_Data.txt \
+                --val_datafile1 ./datafiles/nonenhanced_MNT/Oxford_NightTime_Data_withGT.txt \
+                --niter 20 \
+                --niter_decay 20 \
+                --batchSize 1 \
+                --loadSize '[256, 512]' \
+                --cropSize '[256, 512]' \
+                --maxdisp 48 \
+                --model_dispnet PSMNet_stackhourglass \
+                --loadmodel_dispnet ./pretrained_ckpts_og/netDisp1.tar \
+                --print_freq 50 \
+                --display_freq 1000
+
+*** TRAIN FROM SAVED CHECKPOINT ***
+
+conda activate nightdepth 
+CUDA_VISIBLE_DEVICES=0
+python train.py --name run2 \
+                --dataname Oxford \
+                --trn_datafile1 ./datafiles/Oxford_NightTime_Data.txt \
+                --trn_datafile2 ./datafiles/Oxford_DayTime_Data.txt \
+                --val_datafile1 ./datafiles/Oxford_NightTime_Data_withGT.txt \
+                --niter 20 \
+                --niter_decay 20 \
+                --batchSize 1 \
+                --loadSize '[256, 512]' \
+                --cropSize '[256, 512]' \
+                --maxdisp 48 \
+                --model_dispnet PSMNet_stackhourglass \
+                --loadmodel_dispnet ./pretrained_ckpts_og/netDisp1.tar \
+                --print_freq 50 \
+                --display_freq 1000 \
+		--continue_train \
+		--which_epoch 28	
+
+*** TEST ***
+
+conda activate nightdepth
+CUDA_VISIBLE_DEVICES=2 python predict.py --imgname 01 --datapath ./data/[Test1]_Stereo_Data --ckptpath ./pretrained_ckpts/
+
+CUDA_VISIBLE_DEVICES=2 python predict_pth.py --imgname 01_enhanced --datapath ./test_data/[Test1]_Stereo_Data --ckptpath ./pretrained_ckpts_39/
+
+CUDA_VISIBLE_DEVICES=2 python predict.py --imgname 01_enhanced --datapath ./test_data/[Test1]_Stereo_Data --ckptpath ./pretrained_ckpts/
+
+DIRECTORY STRUCTURE
+- data
+	- [Test1]_StereoData
+		- left
+			- 01.png
+			- 01_enhanced.png
+			- 02.png
+			- 02_enhanced.png
+		- right 
+			- 01.png
+			- 01_enhanced.png
+			- 02.png
+			- 02_enhanced.png
+
+CHANGE image size in predict.py 
+- 512 x 256 for Oxford Dataset
+
+RESULTS found in results directory
+
+---------------------KUBERNETES JOB---------------------
+
+PUT this under command in jobJoseph.yaml w/o Enter or spaces
+
+cd /nightdepth && python train.py --name run2 \
+                --dataname Oxford \
+                --trn_datafile1 ./datafiles/Oxford_NightTime_Data.txt \
+                --trn_datafile2 ./datafiles/Oxford_DayTime_Data.txt \
+                --val_datafile1 ./datafiles/Oxford_NightTime_Data_withGT.txt \
+                --niter 20 \
+                --niter_decay 20 \
+                --batchSize 1 \
+                --loadSize '[256, 512]' \
+                --cropSize '[256, 512]' \
+                --maxdisp 48 \
+                --model_dispnet PSMNet_stackhourglass \
+                --loadmodel_dispnet ./pretrained_ckpts_og/netDisp1.tar \
+                --print_freq 50 \
+                --display_freq 1000 \
+		--continue_train \
+		--which_epoch 28
+
+
+Then run the job
