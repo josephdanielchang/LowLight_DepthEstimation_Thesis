@@ -27,6 +27,32 @@ from models import networks
 import glob
 
 
+from __future__ import print_function
+import argparse
+import os
+import random
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.nn.parallel
+import torch.utils.data
+from torch.autograd import Variable
+import skimage
+import skimage.io
+import skimage.transform
+import numpy as np
+import time
+import math
+import matplotlib.pyplot as plt
+import matplotlib.image  as mpimg
+import matplotlib.cm     as cm
+from torchvision import transforms as transforms
+from torchvision import utils as vutils
+from PIL import Image
+from models import networks
+import glob
+
+
 # Get the input arguments here
 parser = argparse.ArgumentParser(description='predict')
 parser.add_argument('--dataname', 
@@ -58,6 +84,7 @@ else:
 leftimgpaths = glob.glob(args.datapath + '/left_color/*.png') # list of image paths
 rightimgpaths = glob.glob(args.datapath + '/right_color/*.png') # list of image paths
 model          = 'stackhourglass'
+
 # test_left_img  = args.datapath + '/left_color/' + imgname
 # test_right_img = args.datapath + '/right_color/' + imgname
 # resultpath     = args.resultpath + '/' + imgname + '/'
@@ -169,17 +196,22 @@ def main():
     topil_ = transforms.ToPILImage()
     cm_jet_= cm.get_cmap('jet')
 
+    f = open(args.resultpath + '/normal_depth_dir_order.txt','w+')
+
     for i in range(len(leftimgpaths)):
 
         print(i)
 
+        f.write(leftimgpaths[i][-20:-4])
+        f.write('\n')
+
         test_left_img    = leftimgpaths[i]
         test_right_img   = rightimgpaths[i]
-        imgname = leftimgpaths[i][-20:-4]
+        # test_left_img  = args.datapath + '/left_color/' + imgname
+        # test_right_img = args.datapath + '/right_color/' + imgname
+        resultpath       = args.resultpath + '/' + str(i) + '/'
 
-        resultpath       = args.resultpath + '/' + imgname + '/'
-
-        # Check if the result directory exists, else make it
+        # Check if the results directory exists, else make it
         if not os.path.exists(resultpath):
             os.makedirs(resultpath)
 
@@ -217,6 +249,10 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
 
 
 
