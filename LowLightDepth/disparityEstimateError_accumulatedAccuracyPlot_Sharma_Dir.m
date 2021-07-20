@@ -31,39 +31,51 @@ correctK_normal_avg     = 0;        % accumulate avg correct estimates at each i
 correctK_enhanced_avg   = 0;        % accumulate avg correct estimates at each iteration of N here
 nonzero_gt_total_accum = 0;
 
-fileID = fopen('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata\depth_dir_order.txt','r');
+fileID_n = fopen('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata_2\normal_depth_dir_order.txt','r');
+fileID_e = fopen('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata_2\enhanced_depth_dir_order.txt','r');
 
 for i=0:N
     
     i
     
-    timestamp_to_run = fgetl(fileID);       % changes every run
-    index_to_run = string(i);               % changes every run
-
+    timestamp_to_run_n = fgetl(fileID_n);  % changes every run
+    index_to_run_n = string(i);            % changes every run
+    
+    frewind(fileID_e)                      % reset so fgetl reads from first line again
+    for j=0:N
+        temp_timestamp_to_run_e = fgetl(fileID_e);
+        if temp_timestamp_to_run_e == timestamp_to_run_n
+            index_to_run_e = string(j);                    % changes every run
+            break;
+        end
+    end
+    
     %%Load Disparity and Convert Format
     
     %paths to sparse ground truth, 16-bit disparity estimate, 16-bit enhanced, disparity estimate
-    path_gt           = strcat('E:\MSI Backup (121820)\MS Thesis\[Dataset] Oxford RobotCar\2014-11-14-16-34-33_01\stereo\left_disparity_var\',timestamp_to_run,'.mat');
-    path_est          = strcat('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata\normal\',index_to_run,'\disp_tst.png');
-    path_est_enhanced = strcat('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata\enhanced\',index_to_run,'\disp_tst.png'); 
+    path_gt           = strcat('E:\MSI Backup (121820)\MS Thesis\[Dataset] Oxford RobotCar\2014-11-14-16-34-33_01\stereo\left_disparity_var\',timestamp_to_run_n,'.mat');
+    path_est          = strcat('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata_2\normal\',index_to_run_n,'\disp_tst.png');
+    path_est_enhanced = strcat('C:\Users\josep\OneDrive\Documents\MS Thesis\[Code] Sharma_Low-Light Depth\results\before_modified_net\01_nightdepth_testdata_2\enhanced\',index_to_run_e,'\disp_tst.png'); 
 
     %load sparse ground truth, 16-bit disparity estimate, 16-bit enhanced, disparity estimate
     D_gt              = load(path_gt);
     D_gt              = D_gt.disparityMapL;
     D_est_16          = imread(path_est);
     D_est_enhanced_16 = imread(path_est_enhanced);
-
+    
     %convert 16-bit to 8-bit
     D_est_8          = D_est_16 / disparity_newsize(1);
     D_est_enhanced_8 = D_est_enhanced_16 / disparity_newsize(1);
 
-    % remove hood area
-    D_est_8          = D_est_8         (1:end-((hood_size/disparity_oldsize(1))*disparity_newsize(1)), :, :);
+    %remove hood area
+    D_est_8          = D_est_8(1:end-((hood_size/disparity_oldsize(1))*disparity_newsize(1)), :, :);
     D_est_enhanced_8 = D_est_enhanced_8(1:end-((hood_size/disparity_oldsize(1))*disparity_newsize(1)), :, :);
+    D_gt             = D_gt(1:end-((hood_size/disparity_oldsize(1))*disparity_newsize(1)), :, :);
 
     %resize
     disparityMapL          = imresize(D_est_8, disparity_newsize, 'nearest');
     disparityMapL_enhanced = imresize(D_est_enhanced_8, disparity_newsize, 'nearest');
+    D_gt                   = imresize(D_gt, disparity_newsize, 'nearest');
 
     %round to integers
     disparityGT            = uint16(round(D_gt));
@@ -113,7 +125,8 @@ save('errorK_enhanced_avg.mat','errorK_enhanced_avg')
 errorK_normal_avg
 errorK_enhanced_avg
 
-fclose(fileID);
+fclose(fileID_n);
+fclose(fileID_e);
 
 %% Accumulated Accuracy Plots
 
@@ -137,6 +150,7 @@ for i=1:maxKtoPlot-1
     accum_accuracy_enhanced(i+1) = accum_accuracy_enhanced(i+1) + error_cumsum_enhanced(i);
 end
 
+close
 figure(1)
 plot(x,accum_accuracy_normal,'color','blue','linewidth',1.5); hold on
 plot(x,accum_accuracy_enhanced,'color','green','linewidth',1.5); hold on
