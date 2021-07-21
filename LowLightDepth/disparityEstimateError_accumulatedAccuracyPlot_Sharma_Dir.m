@@ -18,6 +18,7 @@ clc, clear
 %% Disparity Error Calculation
 
 N = 6000;                            % CHANGE: number of images to run on starting at index 0 ie. 6000
+plot_disparities = true;             % CHANGE: plot disp_est, disp_est_enhanced, disp_gt
 hood_size = 140;                     % rows containing hood in 960x1280
 disparity_oldsize = [960,1280];      % output disparity resolution
 disparity_newsize = [256,512];       % resized disparity resolution to match ground truth
@@ -127,6 +128,17 @@ errorK_enhanced_avg
 
 fclose(fileID_n);
 fclose(fileID_e);
+
+%% Plot
+
+if plot_disparities
+    figure(2), imshow(disparityMapL,[]);
+    title('Disparity Estimate')
+    figure(3), imshow(disparityMapL_enhanced,[]);
+    title('Disparity Estimate Enhanced')
+    figure(4), imshow(disparityGT,[]);
+    title('Disparity Ground Truth')
+end
 
 %% Accumulated Accuracy Plots
 
