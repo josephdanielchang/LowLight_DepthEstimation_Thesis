@@ -1,0 +1,42 @@
+########### TESTING ############
+
+- automatically downloads latest YOLOv5 release models
+- saves results to runs/detect
+
+### TEMPLATE ###
+
+python detect.py --source 0  # webcam file.jpg  # image 
+                            file.mp4  # video
+                            path/  # directory
+                            path/*.jpg  # glob
+                            'https://youtu.be/NUsoVlDFqZg'  # YouTube video
+                            'rtsp://example.com/media.mp4'  # RTSP, RTMP, HTTP stream
+
+### TEST ###
+python detect.py --source ./data/images/bus.jpg --save-txt --save-conf
+
+### COMMAND TO RUN TEST ON PRETRAINED MODEL ###
+
+python detect.py --source /mnt/earth/joseph/yolo_test_data_7130 --project='bdd/left_normal_7130' --save-txt --save-conf
+python detect.py --source /mnt/earth/joseph/yolo_test_data_enhanced_7130 --project='bdd/left_enhanced_7130' --save-txt --save-conf
+
+### COMMAND TO RUN TEST ON SELF-TRAINED MODEL ###
+
+python detect.py --weights /home/joseph/yolov5/best.pt --source /mnt/earth/joseph/yolo_test_data_7130 --project='bdd/left_normal_7130' --save-txt --save-conf
+python detect.py --weights /home/joseph/yolov5/best.pt --source /mnt/earth/joseph/yolo_test_data_enhanced_7130 --project='bdd/left_enhanced_7130' --save-txt --save-conf
+
+########### TRAINING ############
+
+- need bdd_dataset.yaml
+- need BDD_enhanced_training_data --> with /labels and /images
+
+python train.py --img 640 --batch 16 --epochs 300 --data ./data/bdd_dataset.yaml --weights yolov5s.pt
+
+
+
+
+
+
+
+
+
